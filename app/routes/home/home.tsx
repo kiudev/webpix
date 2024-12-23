@@ -1,6 +1,15 @@
+import type { Route } from "./+types/home";
 import { useImageContext } from "~/hooks/useImageContext";
 import { useEffect, useState, useRef } from "react";
 import { resources } from "~/assets";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Webpix" },
+    { name: "description", content: "Welcome to Webpix!" },
+  ];
+}
+
 
 export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
