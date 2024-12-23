@@ -3,3 +3,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+::view-transition-old(root) {
+  animation: 300ms ease-in-out slide-out-left;
+}
+
+::view-transition-new(root) {
+  animation: 300ms ease-in-out slide-in-right;
+}
