@@ -1,32 +1,11 @@
 import { iconFile } from "@/assets/icons";
-import { useTheme } from "@/context/ThemeContext";
 import { Dropzone } from "@/components/Dropzone";
+import Layout from "@/components/layout/Layout";
 
 export default function Welcome() {
-  const { theme, setTheme } = useTheme();
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
   return (
-    <div className="min-h-screen max-w-screen bg-color-300 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(13,19,21,0.2),rgba(255,255,255,0))] text-color-100 dark:bg-color-100 dark:text-color-300 dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(225,231,233,0.2),rgba(255,255,255,0))] transition-colors duration-500">
-      <section className="grid grid-flow-row min-h-screen lg:w-[1300px] lg:m-auto px-5">
-        <header className="animate-fadeInUp pt-14">
-          <nav className="flex flex-row justify-between items-center">
-            <h1 className="font-nunito text-4xl uppercase tracking-widest font-bold text-color-200 dark:text-color-300">
-              Webpix
-            </h1>
-
-            <button
-              onClick={toggleTheme}
-              className="-mt-1 text-color-200 dark:text-color-300"
-            >
-              {theme === "light" ? iconFile[2].lightModeIcon : iconFile[3].darkModeIcon}
-            </button>
-          </nav>
-        </header>
-
-        <main className="flex lg:flex-row flex-col items-center gap-20 animate-fadeInUp">
+    <Layout>
+      <main className="flex lg:flex-row flex-col items-center gap-20 animate-fadeInUp">
           <section className="flex flex-col gap-3 font-nunito lg:w-[40%]">
             <h1 className="text-3xl lg:text-6xl font-semibold">
               Compress your image to{" "}
@@ -65,8 +44,7 @@ export default function Welcome() {
             Daniel Saavedra
           </p>
         </footer>
-      </section>
-    </div>
+    </Layout>
   )
 }
 
