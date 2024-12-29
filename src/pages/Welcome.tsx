@@ -1,7 +1,8 @@
 import { iconFile } from "@/assets/icons";
-import { useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
+
 export default function Welcome() {
-  const [theme, setTheme] = useState("light")
+  const { theme, setTheme } = useTheme();
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
