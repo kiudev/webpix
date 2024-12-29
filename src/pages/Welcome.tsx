@@ -1,5 +1,6 @@
 import { iconFile } from "@/assets/icons";
 import { useTheme } from "@/context/ThemeContext";
+import { Dropzone } from "@/components/Dropzone";
 
 export default function Welcome() {
   const { theme, setTheme } = useTheme();
@@ -32,8 +33,7 @@ export default function Welcome() {
               <span className="dark:text-color-400 text-color-200">WEBP</span>
             </h1>
             <h2 className="text-md lg:text-2xl">Optimize your web applications better</h2>
-      <button type='submit' className='bg-color-200 text-color-300 py-4 px-8 cursor-pointer mt-10 w-40 text-xl'>Start</button>
-            {/* <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus reiciendis nemo autem ex quas id vero molestiae. Adipisci nulla harum sit accusamus vero alias magni nostrum tempore. Neque, doloremque quas.</p> */}
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus reiciendis nemo autem ex quas id vero molestiae. Adipisci nulla harum sit accusamus vero alias magni nostrum tempore. Neque, doloremque quas.</p>
           </section>
 
           {/* <section className="flex flex-col justify-center items-center border-2 rounded-xl border-color-200 border-dashed p-10 mt-10 lg:mt-0 text-center font-nunito w-80 m-auto lg:w-[50%] h-full">
@@ -56,7 +56,7 @@ export default function Welcome() {
             </button>
 
           </section> */}
-            {/* <Dropzone /> */}
+            <Dropzone />
         </main>
 
         <footer className="pt-40 relative flex justify-center font-nunito ">
