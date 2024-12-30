@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FilePond } from "react-filepond";
 import { FilePondFile, FilePondInitialFile } from "filepond";
 import "filepond/dist/filepond.min.css";
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import "./dropzone-styles.css";
 import { useFileContext } from "@/context/FileContext";
 import { useNavigateWithTransition } from "@/hooks/useNavigateWithTransition";
