@@ -15,8 +15,6 @@ export const FileContext = createContext<FileContextType>({
 export function FileProvider({ children }: { children: ReactNode }) {
   const [files, setFiles] = useState<FilePondFile[]>([])
 
-
-
   const values = {
     files,
     setFiles,
