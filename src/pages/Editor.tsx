@@ -11,9 +11,7 @@ export default function Editor() {
   const [height, setHeight] = useState<number>(0);
   const [quality, setQuality] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [fileData, setFileData] = useState<string[]>([]);
-
 
   useEffect(() => {
     const files = sessionStorage.getItem('files');
@@ -22,8 +20,6 @@ export default function Editor() {
       setFileData(JSON.parse(files));
     }
   }, [])
-
-  console.log('Editor', fileData);
 
   // const handleDownload = () => {
   //   if (!fileData) return;
@@ -45,30 +41,11 @@ export default function Editor() {
   //   img.src = image as string;
   // };
 
-  useEffect(() => {
-    const prefersDarkMode = matchMedia("(prefers-color-scheme: dark)");
-    setTheme(prefersDarkMode.matches ? "dark" : "light");
-
-    const handleChange = (e: MediaQueryListEvent) =>
-      setTheme(e.matches ? "dark" : "light");
-    prefersDarkMode.addEventListener("change", handleChange);
-
-    return () => prefersDarkMode.removeEventListener("change", handleChange);
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [theme]);
-
   return (
     <Layout>
-      <div>
+      <section className="flex flex-row-reverse justify-between">
+
+      <div className="flex flex-col">
         <label>
           Width:
           <input
@@ -77,8 +54,8 @@ export default function Editor() {
             onChange={(e) => setWidth(Number(e.target.value))}
           />
         </label>
-      </div>
-      <div>
+
+
         <label>
           Height:
           <input
@@ -87,8 +64,8 @@ export default function Editor() {
             onChange={(e) => setHeight(Number(e.target.value))}
           />
         </label>
-      </div>
-      <div>
+
+
         <label>
           Quality:
           <input
@@ -100,8 +77,8 @@ export default function Editor() {
             onChange={(e) => setQuality(Number(e.target.value))}
           />
         </label>
-      </div>
-      <div>
+
+
         <label>
           Scale:
           <input
@@ -126,9 +103,10 @@ export default function Editor() {
           key={index}
           src={file}
           alt="Selected"
-          style={{ maxWidth: "100%", maxHeight: "100%" }}
+          style={{ maxWidth: "50%", maxHeight: "50%" }}
         />
       ))}
+      </section>
     </Layout>
   );
 }
