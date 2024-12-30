@@ -18,6 +18,7 @@ export default {
     },
     animation: {
       fadeInUp: "fadeInUp 0.8s ease-in-out",
+      slide: 'slide 0.8s ease-in-out',
     },
     keyframes: {
       fadeInUp: {
@@ -30,6 +31,14 @@ export default {
           transform: "translateY(0)",
         },
       },
+      slide: {
+        "0%": {
+          transform: "translateY(-100%)",
+        },
+        "100%": {
+          transform: "translateY(0)",
+        },
+      }
     },
   },
   plugins: [],
