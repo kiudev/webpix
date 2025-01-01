@@ -2,8 +2,8 @@ import {
   createContext,
   type ReactNode,
   useState,
-  useContext,
   type FormEvent,
+  useContext,
 } from "react";
 import { FilePondFile } from "filepond";
 import { useNavigateWithTransition } from "@/hooks/useNavigateWithTransition";
@@ -68,14 +68,14 @@ export function FileProvider({ children }: { children: ReactNode }) {
     isAuthenticated,
   };
 
-  return <FileContext.Provider value={values}>{children}</FileContext.Provider>;
+  return <FileContext value={values}>{children}</FileContext>;
 }
 
 export function useFileContext() {
   const context = useContext(FileContext);
 
   if (!context) {
-    throw new Error("ImageContext is not provided");
+    throw new Error('useFileContext must be used within a FileProvider');
   }
 
   return context;

@@ -1,9 +1,12 @@
-import { createContext, useEffect, type ReactNode, useState, useContext, useLayoutEffect } from "react";
+import { createContext, useEffect, type ReactNode, useState, useLayoutEffect, useContext } from "react";
 interface ThemeContextType {
   theme: 'light' | 'dark';
   setTheme: (theme: 'light' | 'dark') => void;
 }
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType>({
+  theme: 'light',
+  setTheme: () => {}
+});
 
 export const ThemeProvider = ({ children }: {children: ReactNode}) => {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -41,17 +44,17 @@ export const ThemeProvider = ({ children }: {children: ReactNode}) => {
     }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{theme, setTheme}}>
+    <ThemeContext value={{theme, setTheme}}>
       {children}
-    </ThemeContext.Provider>
+    </ThemeContext>
   )
 }
 
-export const useTheme = () => {
+export function useThemeContext() {
   const context = useContext(ThemeContext);
 
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
 
   return context;
