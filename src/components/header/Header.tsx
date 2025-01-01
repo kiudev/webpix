@@ -1,11 +1,13 @@
 import { iconFile } from "@/assets/icons";
-import { useTheme } from "@/context/ThemeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 
 export default function Header() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useThemeContext();
+
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
   return (
     <header className="animate-fadeInUp pt-14">
       <nav className="flex flex-row justify-between items-center">
