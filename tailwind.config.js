@@ -24,10 +24,12 @@ export default {
       fadeInUp: {
         "0%": {
           opacity: "0",
+          filter: 'blur(3px)',
           transform: "translateY(40px)",
         },
         "100%": {
           opacity: "1",
+          filter: 'blur(0)',
           transform: "translateY(0)",
         },
       },
