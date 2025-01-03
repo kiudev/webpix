@@ -30,7 +30,7 @@ export const Dropzone = () => {
       />
       <button
         type="submit"
-        className="bg-color-200 text-color-300 py-2 px-10 z-20 sticky float-right cursor-pointer mt-2 text-lg"
+        className="bg-color-200 text-color-300 py-1 px-10 sticky float-right cursor-pointer mt-4 text-md rounded-[5px]"
       >
         Start
       </button>
