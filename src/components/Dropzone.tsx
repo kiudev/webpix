@@ -19,7 +19,7 @@ export const Dropzone = () => {
     <form className="w-[50%] h-40" onSubmit={handleSubmit}>
       <FilePond
         files={convertedFiles}
-        allowMultiple={true}
+        allowMultiple={false}
         dropOnPage={true}
         dropOnElement={false}
         onupdatefiles={(fileItems: FilePondFile[]) => {
