@@ -1,4 +1,3 @@
-import { iconFile } from "@/assets/icons";
 import { Dropzone } from "@/components/Dropzone";
 import Layout from "@/components/layout/Layout";
 
@@ -21,37 +20,8 @@ export default function Welcome() {
             compression, making it an excellent choice for web applications.
           </p>
         </section>
-
-        {/* <section className="flex flex-col justify-center items-center border-2 rounded-xl border-color-200 border-dashed p-10 mt-10 lg:mt-0 text-center font-nunito w-80 m-auto lg:w-[50%] h-full">
-            <h2 className="text-xl">
-              Drop images <br />
-              or
-            </h2>
-            <input
-              ref={fileInputRef}
-              className="hidden"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-            <button
-              className="text-color-200 dark:text-color-300"
-              onClick={handleClick}
-            >
-              {imageIcon}
-            </button>
-
-          </section> */}
         <Dropzone />
       </main>
-
-      <footer className="pt-40 relative flex justify-center font-nunito ">
-        <p className="absolute bottom-2 flex flex-row gap-1">
-          Made with{" "}
-          <span className="text-color-200">{iconFile[1].heartIcon}</span> by
-          Daniel Saavedra
-        </p>
-      </footer>
     </Layout>
   );
 }
