@@ -91,12 +91,12 @@ export default function Editor() {
             })}
           <button
             className="bg-color-200 px-8 py-2 w-60 rounded-md"
-            onClick={(e) => handleDownload(e, { fileData, params, files })}
+            onClick={() => handleDownload({ fileData, params, files })}
           >
             Download
           </button>
         </section>
-        <div className="w-[500px] h-[500px] flex">
+        <div className="flex">
           {fileData && (
             <>
               <div className="w-[50%]">

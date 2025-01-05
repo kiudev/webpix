@@ -1,5 +1,4 @@
 import { FilePondFile } from "filepond";
-import { MouseEvent } from "react";
 
 interface DownloadImageProps {
   fileData: string[];
@@ -11,10 +10,11 @@ interface DownloadImageProps {
   files: FilePondFile[];
 }
 
-export const handleDownload = (
-  e: MouseEvent<HTMLButtonElement>,
-  { fileData, params, files }: DownloadImageProps
-) => {
+export const handleDownload = ({
+  fileData,
+  params,
+  files,
+}: DownloadImageProps) => {
   if (!fileData) return;
 
   const canvas = document.createElement("canvas");
@@ -43,18 +43,22 @@ export const handleDownload = (
       canvas.height
     );
 
-    canvas.toBlob((blob) => {
-      if (blob) {
-        const fileSizeInMB = blob.size / (1024 * 1024);
-        console.log("Downloaded image size:", fileSizeInMB.toFixed(2), "MB");
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          const fileSizeInMB = blob.size / (1024 * 1024);
+          console.log("Downloaded image size:", fileSizeInMB.toFixed(2), "MB");
 
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `${files[0].file.name.split(".")[0]}.webp`;
-        link.click();
-        URL.revokeObjectURL(link.href);
-      }
-    }, 'image/webp', params.quality / 100);
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = `${files[0].file.name.split(".")[0]}.webp`;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        }
+      },
+      "image/webp",
+      params.quality / 100
+    );
   };
 
   img.src = fileData[0];
