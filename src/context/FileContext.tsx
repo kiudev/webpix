@@ -8,11 +8,19 @@ import {
 import { FilePondFile } from "filepond";
 import { useNavigateWithTransition } from "@/hooks/useNavigateWithTransition";
 
+type Params = {
+  width: number;
+  height: number;
+  quality: number;
+};
+
 interface FileContextType {
   files: FilePondFile[];
   setFiles: React.Dispatch<React.SetStateAction<FilePondFile[]>>;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   isAuthenticated: boolean;
+  params: Params;
+  setParams: React.Dispatch<React.SetStateAction<Params>>;
 }
 
 export const FileContext = createContext<FileContextType>({
@@ -20,12 +28,23 @@ export const FileContext = createContext<FileContextType>({
   setFiles: () => {},
   handleSubmit: () => {},
   isAuthenticated: false,
+  params: {
+    width: 0,
+    height: 0,
+    quality: 75,
+  },
+  setParams: () => {}
 });
 
 export function FileProvider({ children }: { children: ReactNode }) {
   const [files, setFiles] = useState<FilePondFile[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const navigate = useNavigateWithTransition();
+  const [params, setParams] = useState<Params>({
+    width: 0,
+    height: 0,
+    quality: 75,
+  });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,6 +85,8 @@ export function FileProvider({ children }: { children: ReactNode }) {
     setFiles,
     handleSubmit,
     isAuthenticated,
+    params,
+    setParams
   };
 
   return <FileContext value={values}>{children}</FileContext>;

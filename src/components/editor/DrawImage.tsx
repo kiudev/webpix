@@ -1,18 +1,22 @@
 import { useEffect } from "react";
+import { useFileContext } from "@/context/FileContext";
 
 interface DrawImageProps {
   fileData: string[];
-  params: {
-    width: number;
-    height: number;
-    quality: number;
-  };
   originalCanvasRef: React.RefObject<HTMLCanvasElement | null>;
   editedCanvasRef: React.RefObject<HTMLCanvasElement | null>;
   setAspectRatio: React.Dispatch<React.SetStateAction<number | null>>;
+  setFileSizeInKB: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export const DrawImage = ({ fileData, params, originalCanvasRef, editedCanvasRef, setAspectRatio }: DrawImageProps) => {
+export const DrawImage = ({
+  fileData,
+  originalCanvasRef,
+  editedCanvasRef,
+  setAspectRatio,
+  setFileSizeInKB
+}: DrawImageProps) => {
+  const { params } = useFileContext();
   useEffect(() => {
     const drawOriginalImage = () => {
       if (!fileData || !originalCanvasRef.current) return;
@@ -22,8 +26,8 @@ export const DrawImage = ({ fileData, params, originalCanvasRef, editedCanvasRef
       const img = new Image();
 
       img.onload = () => {
-        canvas.width = 1000;
-        canvas.height = 800;
+        canvas.width = img.width;
+        canvas.height = img.height;
         setAspectRatio(img.width / img.height);
         ctx?.drawImage(img, 0, 0, canvas?.width, canvas?.height);
       };
@@ -64,8 +68,20 @@ export const DrawImage = ({ fileData, params, originalCanvasRef, editedCanvasRef
           canvas.width,
           canvas.height
         );
-        console.log('tempCanvas', tempCanvas.width, tempCanvas.height);
-        console.log('Canvas', canvas.width, canvas.height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              console.log(blob.size);
+              const fileSizeInMB = blob.size / (1024 * 1024);
+              const fileSizeInKB = blob.size / 1024;
+              setFileSizeInKB(Number(fileSizeInKB.toFixed(2)));
+              console.log("File size:", fileSizeInMB.toFixed(2), "MB");
+            }
+          },
+          "image/webp",
+          params.quality / 100
+        );
       };
       img.src = fileData[0];
     };
@@ -73,4 +89,4 @@ export const DrawImage = ({ fileData, params, originalCanvasRef, editedCanvasRef
     drawOriginalImage();
     drawEditedImage();
   }, [fileData, params]);
-}
+};
