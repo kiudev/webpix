@@ -5,7 +5,7 @@ import "./dropzone-styles.css";
 import { useFileContext } from "@/context/FileContext";
 
 export const Dropzone = () => {
-  const { files, setFiles, handleSubmit } = useFileContext();
+  const { files, setFiles, handleSubmit, setParams } = useFileContext();
 
   const convertedFiles: FilePondInitialFile[] = files.map((file) => ({
     source: file.file.name,
@@ -24,6 +24,21 @@ export const Dropzone = () => {
         dropOnElement={false}
         onupdatefiles={(fileItems: FilePondFile[]) => {
           setFiles(fileItems);
+
+          fileItems.forEach((fileItem) => {
+            const file = fileItem.file;
+
+            if (file.type.startsWith("image/")) {
+              const img = new Image();
+
+              img.onload = () => {
+                const width = img.width;
+                const height = img.height;
+                setParams({ width, height, quality: 75 })
+              }
+              img.src = URL.createObjectURL(file);
+            }
+          })
         }}
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
         stylePanelLayout={"compact"}
