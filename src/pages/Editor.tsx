@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import type { LoaderFunction } from "react-router";
 import Layout from "@/components/layout/Layout";
 import { useFileContext } from "@/context/FileContext";
+import { DrawImage } from "@/components/editor/DrawImage";
+import { handleDownload } from "@/components/editor/DownloadImage";
+import { handleDimensionChange } from "@/components/editor/DimensionChange";
 
 type Params = {
   width: number;
   height: number;
   quality: number;
-  scale: number;
 };
 
 export const Loader: LoaderFunction = async () => {
@@ -19,13 +21,14 @@ export default function Editor() {
     width: 800,
     height: 600,
     quality: 70,
-    scale: 50,
   });
 
   const { files } = useFileContext();
 
   const [fileData, setFileData] = useState<string[]>([]);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [aspectRatio, setAspectRatio] = useState<number | null>(null);
+  const originalCanvasRef = useRef<HTMLCanvasElement>(null);
+  const editedCanvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const files = sessionStorage.getItem("files");
@@ -35,71 +38,35 @@ export default function Editor() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!fileData || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-
-    img.onload = () => {
-      const scaleFactor = params.scale / 100;
-      canvas.width = params.width * scaleFactor;
-      canvas.height = params.height * scaleFactor;
-
-      ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-    };
-
-    img.src = fileData[0];
-  }, [fileData, params]);
-
-  const handleDownload = () => {
-    if (!fileData) return;
-
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-
-    img.onload = () => {
-      const scaleFactor = params.scale / 100;
-      canvas.width = params.width * scaleFactor;
-      canvas.height = params.height * scaleFactor;
-
-      ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-      const link = document.createElement("a");
-      link.href = canvas.toDataURL("image/jpeg", params.quality / 100);
-      link.download = `${files[0].file.name.split(".")[0]}.webp`;
-      link.click();
-    };
-
-    img.src = fileData[0];
-  };
+  DrawImage({ fileData, params, originalCanvasRef, editedCanvasRef, setAspectRatio });
 
   return (
     <Layout>
       <article className="flex flex-row-reverse justify-between gap-20">
         <section className="flex flex-col gap-10 w-[50%]">
           <section className="flex flex-row gap-5">
-            {Object.entries(params)
-              .slice(0, 2)
-              .map(([key, value]) => {
-                return (
-                  <div key={key} className="flex flex-col gap-2">
-                    <label className="text-lg" htmlFor={key}>
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label>
-                    <input
-                      className="bg-color-300 text-color-100 outline-none text-md indent-2 p-1 rounded-md"
-                      min={0}
-                      type="number"
-                      value={value}
-                      onChange={(e) =>
-                        setParams({ ...params, [key]: Number(e.target.value) })
-                      }
-                    />
-                  </div>
-                );
-              })}
+            <label className="text-lg" htmlFor="width">
+              Width
+            </label>
+            <input
+              className="bg-color-300 text-color-100 outline-none text-md indent-2 p-1 rounded-md"
+              type="number"
+              name="width"
+              value={params.width}
+              onChange={(e) =>
+                handleDimensionChange("width", Number(e.target.value), {aspectRatio, params, setParams})
+              }
+            />
+            <label htmlFor="height">Height</label>
+            <input
+              className="bg-color-300 text-color-100 outline-none text-md indent-2 p-1 rounded-md"
+              type="number"
+              name="height"
+              value={params.height}
+              onChange={(e) =>
+                handleDimensionChange("height", Number(e.target.value), { aspectRatio, params, setParams })
+              }
+            />
           </section>
 
           {Object.entries(params)
@@ -124,30 +91,14 @@ export default function Editor() {
                 </div>
               );
             })}
-        <button onClick={handleDownload}>Download Optimized Image</button>
+          <button onClick={(e) => handleDownload(e, {fileData, params, files})}>Download Optimized Image</button>
         </section>
-        {/* {fileData && (
-        <img
-          src={image as string}
-          alt="Selected"
-          style={{ maxWidth: "100%", maxHeight: "100%" }}
-        />
-      )}  */}
         <div className="w-[50%]">
-          {/* {fileData.map((file, index) => (
-            <img
-              className='object-cover'
-              width={params.width * params.scale}
-              height={params.height * params.scale}
-              key={index}
-              src={file}
-              alt="Selected"
-            />
-          ))} */}
           {fileData && (
-            <>
-              <canvas ref={canvasRef} className={`w-full h-full object-cover`} />
-            </>
+            <div className="flex flex-col gap-10 border">
+              <canvas ref={originalCanvasRef} className="w-full h-full" />
+              <canvas ref={editedCanvasRef} className="w-full h-full"></canvas>
+            </div>
           )}
         </div>
       </article>
