@@ -6,6 +6,7 @@ interface DrawImageProps {
   originalCanvasRef: React.RefObject<HTMLCanvasElement | null>;
   editedCanvasRef: React.RefObject<HTMLCanvasElement | null>;
   setAspectRatio: React.Dispatch<React.SetStateAction<number | null>>;
+  setFileSizeInMB: React.Dispatch<React.SetStateAction<number | null>>;
   setFileSizeInKB: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
@@ -14,6 +15,7 @@ export const DrawImage = ({
   originalCanvasRef,
   editedCanvasRef,
   setAspectRatio,
+  setFileSizeInMB,
   setFileSizeInKB
 }: DrawImageProps) => {
   const { params } = useFileContext();
@@ -72,11 +74,10 @@ export const DrawImage = ({
         canvas.toBlob(
           (blob) => {
             if (blob) {
-              console.log(blob.size);
               const fileSizeInMB = blob.size / (1024 * 1024);
               const fileSizeInKB = blob.size / 1024;
+              setFileSizeInMB(Number(fileSizeInMB.toFixed(2)));
               setFileSizeInKB(Number(fileSizeInKB.toFixed(2)));
-              console.log("File size:", fileSizeInMB.toFixed(2), "MB");
             }
           },
           "image/webp",
