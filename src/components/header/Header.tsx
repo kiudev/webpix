@@ -20,8 +20,8 @@ export default function Header() {
           className="-mt-1 text-color-200 dark:text-color-300"
         >
           {theme === "light"
-            ? iconFile[2].lightModeIcon
-            : iconFile[3].darkModeIcon}
+            ? iconFile.lightModeIcon
+            : iconFile.darkModeIcon}
         </button>
       </nav>
     </header>
