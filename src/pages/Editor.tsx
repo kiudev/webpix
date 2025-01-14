@@ -79,14 +79,27 @@ export default function Editor() {
       <div className="flex flex-row">
         {fileData && (
           <>
-            <OriginalImage originalFileInKB={originalFileInKB} originalFileInMB={originalFileInMB} originalCanvasRef={originalCanvasRef} />
-            <EditedImage editedCanvasRef={editedCanvasRef} fileSizeInKB={fileSizeInKB} fileSizeInMB={fileSizeInMB} />
+            <OriginalImage
+              originalFileInKB={originalFileInKB}
+              originalFileInMB={originalFileInMB}
+              originalCanvasRef={originalCanvasRef}
+            />
+
+            <EditedImage
+              editedCanvasRef={editedCanvasRef}
+              fileSizeInKB={fileSizeInKB}
+              fileSizeInMB={fileSizeInMB}
+            />
           </>
         )}
       </div>
       <DownloadButton fileData={fileData} params={params} files={files} />
       <div className="fixed bottom-10 right-36 flex flex-row">
-        <PercentageComponent compressionPercentage={compressionPercentage} fileSizeInKB={fileSizeInKB} originalFileInKB={originalFileInKB} />
+        <PercentageComponent
+          compressionPercentage={compressionPercentage}
+          fileSizeInKB={fileSizeInKB}
+          originalFileInKB={originalFileInKB}
+        />
       </div>
     </article>
   );
