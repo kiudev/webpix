@@ -9,6 +9,7 @@ import OriginalImage from "@/components/ui/OriginalImage";
 import EditedImage from "@/components/ui/EditedImage";
 import DownloadButton from "@/components/ui/DownloadButton";
 import PercentageComponent from "@/components/ui/PercentageComponent";
+import { iconFile } from "@/assets/icons";
 
 export const Loader: LoaderFunction = async () => {
   return {};
@@ -19,6 +20,8 @@ export default function Editor() {
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
   const [fileSizeInMB, setFileSizeInMB] = useState<number | null>(null);
   const [fileSizeInKB, setFileSizeInKB] = useState<number | null>(null);
+  const [isMovingBoth, setIsMovingBoth] = useState(false);
+  const [zoom, setZoom] = useState(1);
   const originalCanvasRef = useRef<HTMLCanvasElement>(null);
   const editedCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -56,39 +59,61 @@ export default function Editor() {
     setFileSizeInKB,
   });
 
+  const handleMoveBothImages = () => {
+    if (!isMovingBoth) {
+      setIsMovingBoth(true);
+    } else {
+      setIsMovingBoth(false);
+    }
+  };
+
+  const handleMouseWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
+    setZoom(zoom + e.deltaY * -0.001);
+  };
+
   return (
     <article className="flex flex-col w-full gap-20 min-h-screen max-w-screen bg-color-300 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(13,19,21,0.2),rgba(255,255,255,0))] text-color-100 dark:bg-color-100 dark:text-color-300 dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(225,231,233,0.2),rgba(255,255,255,0))] transition-colors duration-500">
-      <section className="flex flex-col gap-10 w-[30%] fixed left-0 right-0 bottom-0 m-auto bg-color-200 rounded-t-2xl px-10 py-5 animate-fadeInUp">
-        <section className="flex flex-row gap-2">
-          <WidthInput
-            params={params}
-            aspectRatio={aspectRatio}
-            setParams={setParams}
-          />
-          <HeightInput
-            params={params}
-            aspectRatio={aspectRatio}
-            setParams={setParams}
-          />
-        </section>
+      <section className="flex flex-col w-[20%] gap-5 fixed left-0 right-0 bottom-0 m-auto bg-color-200 rounded-t-2xl px-10 py-5 animate-fadeInUp">
+        <WidthInput
+          params={params}
+          aspectRatio={aspectRatio}
+          setParams={setParams}
+        />
+        <HeightInput
+          params={params}
+          aspectRatio={aspectRatio}
+          setParams={setParams}
+        />
 
-        <div className="flex flex-col gap-2 w-full">
-          <QualityInput params={params} setParams={setParams} />
-        </div>
+        <QualityInput params={params} setParams={setParams} />
       </section>
-      <div className="flex flex-row">
+      <div className="flex flex-row min-h-screen">
+        <div>
+          <button
+            className="absolute inset-0 w-10 h-10 m-auto bg-color-200 rounded-lg px-2"
+            onClick={handleMoveBothImages}
+          >
+            {iconFile.moveBoth}
+          </button>
+        </div>
         {fileData && (
           <>
             <OriginalImage
               originalFileInKB={originalFileInKB}
               originalFileInMB={originalFileInMB}
               originalCanvasRef={originalCanvasRef}
+              isMovingBoth={isMovingBoth}
+              zoom={zoom}
+              handleMouseWheel={handleMouseWheel}
             />
 
             <EditedImage
               editedCanvasRef={editedCanvasRef}
               fileSizeInKB={fileSizeInKB}
               fileSizeInMB={fileSizeInMB}
+              isMovingBoth={isMovingBoth}
+              zoom={zoom}
+              handleMouseWheel={handleMouseWheel}
             />
           </>
         )}
