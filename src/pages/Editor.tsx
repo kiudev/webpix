@@ -90,7 +90,7 @@ export default function Editor() {
       <div className="flex flex-row min-h-screen">
         <div>
           <button
-            className="absolute inset-0 w-10 h-10 m-auto bg-color-200 rounded-lg px-2"
+            className={`absolute inset-0 w-10 h-10 m-auto bg-color-200 rounded-lg px-2 ${isMovingBoth ? 'bg-color-300 text-color-200' : 'bg-color-200 text-color-300'}`}
             onClick={handleMoveBothImages}
           >
             {iconFile.moveBoth}
