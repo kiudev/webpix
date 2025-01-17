@@ -1,16 +1,16 @@
 import React, { useEffect, useCallback } from "react";
 interface MoveImageProps {
   startPositionRef: React.RefObject<{ x: number; y: number }>;
-  position: { x: number; y: number };
-  setPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
+  imagePosition: { x: number; y: number };
+  setImagePosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
   isDragging: boolean;
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function useMoveImage({
   startPositionRef,
-  position,
-  setPosition,
+  imagePosition,
+  setImagePosition,
   isDragging,
   setIsDragging,
 }: MoveImageProps) {
@@ -18,11 +18,11 @@ export default function useMoveImage({
     (e: React.MouseEvent<HTMLCanvasElement>) => {
       setIsDragging(true);
       startPositionRef.current = {
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
+        x: e.clientX - imagePosition.x,
+        y: e.clientY - imagePosition.y,
       };
     },
-    [position, setIsDragging, startPositionRef]
+    [imagePosition, setIsDragging, startPositionRef]
   );
 
   const handleMouseMove = useCallback(
@@ -32,9 +32,9 @@ export default function useMoveImage({
       const newX = e.clientX - startPositionRef.current.x;
       const newY = e.clientY - startPositionRef.current.y;
 
-      setPosition({ x: newX, y: newY });
+      setImagePosition({ x: newX, y: newY });
     },
-    [isDragging, setPosition, startPositionRef]
+    [isDragging, setImagePosition, startPositionRef]
   );
 
   const handleMouseUp = useCallback(() => {

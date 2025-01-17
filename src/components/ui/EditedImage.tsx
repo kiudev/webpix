@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import "ldrs/dotPulse";
 import useMoveImage from "../../hooks/useMoveImage";
+import { useFileContext } from "@/context/FileContext";
 
 declare module "react" {
   namespace JSX {
@@ -21,45 +22,51 @@ interface EditedImageProps {
   editedCanvasRef: React.RefObject<HTMLCanvasElement | null>;
   fileSizeInKB: number | null;
   fileSizeInMB: number | null;
+  isMovingBoth: boolean;
+  zoom: number;
+  handleMouseWheel: (e: React.WheelEvent<HTMLCanvasElement>) => void;
 }
 
 export default function EditedImage({
   editedCanvasRef,
   fileSizeInKB,
   fileSizeInMB,
+  isMovingBoth,
+  zoom,
+  handleMouseWheel
 }: EditedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
   const startPositionRef = useRef({ x: 0, y: 0 });
 
-  const handleMouseWheel = useCallback(
-    (e: React.WheelEvent<HTMLCanvasElement>) => {
-      e.preventDefault();
-      setZoom(zoom + e.deltaY / 100);
-      console.log(zoom);
-    },
-    [zoom]
-  );
+  const { equalPosition, setEqualPosition } = useFileContext();
 
-  const { handleMouseDown } =
-    useMoveImage({
-      startPositionRef,
-      position,
-      setPosition,
-      isDragging,
-      setIsDragging,
-    });
+  const { handleMouseDown } = useMoveImage({
+    startPositionRef,
+    imagePosition,
+    setImagePosition,
+    isDragging,
+    setIsDragging,
+  });
 
   useEffect(() => {
     if (fileSizeInKB !== null || fileSizeInMB !== null) {
       setIsLoading(false);
+      if (isMovingBoth) {
+        setEqualPosition(imagePosition);
+      }
     }
-  }, [fileSizeInKB, fileSizeInMB]);
+  }, [
+    fileSizeInKB,
+    fileSizeInMB,
+    isMovingBoth,
+    imagePosition,
+    setEqualPosition,
+  ]);
 
   return (
-    <div className="w-[50%] border-l">
+    <div className="w-[50%] border-l flex flex-col justify-center">
       <div className="flex flex-row fixed top-0 px-5 py-2 bg-color-200">
         {!isLoading ? (
           <>
@@ -74,11 +81,16 @@ export default function EditedImage({
         )}
       </div>
       <canvas
-        style={{ objectPosition: `${position.x}px ${position.y}px` }}
+        style={{
+          objectPosition: isMovingBoth
+            ? `${equalPosition.x}px ${equalPosition.y}px`
+            : `${imagePosition.x}px ${imagePosition.y}px`,
+          zoom: zoom,
+        }}
         onMouseDown={handleMouseDown}
         onWheel={handleMouseWheel}
         ref={editedCanvasRef}
-        className={`w-full h-screen object-cover ${
+        className={`w-full min-h-screen object-cover ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         } `}
       />

@@ -21,6 +21,8 @@ interface FileContextType {
   isAuthenticated: boolean;
   params: Params;
   setParams: React.Dispatch<React.SetStateAction<Params>>;
+  equalPosition: {x: number, y: number};
+  setEqualPosition: React.Dispatch<React.SetStateAction<{x: number, y: number}>>;
 }
 
 export const FileContext = createContext<FileContextType>({
@@ -33,7 +35,9 @@ export const FileContext = createContext<FileContextType>({
     height: 0,
     quality: 75,
   },
-  setParams: () => {}
+  setParams: () => {},
+  equalPosition: { x: 0, y: 0 },
+  setEqualPosition: () => {}
 });
 
 export function FileProvider({ children }: { children: ReactNode }) {
@@ -45,6 +49,7 @@ export function FileProvider({ children }: { children: ReactNode }) {
     height: 0,
     quality: 75,
   });
+  const [equalPosition, setEqualPosition] = useState<{x: number, y: number}>({ x: 0, y: 0 })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,7 +91,9 @@ export function FileProvider({ children }: { children: ReactNode }) {
     handleSubmit,
     isAuthenticated,
     params,
-    setParams
+    setParams,
+    equalPosition,
+    setEqualPosition
   };
 
   return <FileContext value={values}>{children}</FileContext>;
