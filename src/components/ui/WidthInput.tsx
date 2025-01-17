@@ -17,8 +17,8 @@ interface WidthInputProps {
 
 export default function WidthInput({ params, aspectRatio, setParams }: WidthInputProps) {
   return (
-    <>
-      <label className="text-lg" htmlFor="width">
+    <section className="flex flex-col gap-2 w-full">
+      <label className="text-md" htmlFor="width">
         Width
       </label>
       <input
@@ -34,6 +34,6 @@ export default function WidthInput({ params, aspectRatio, setParams }: WidthInpu
           })
         }
       />
-    </>
+    </section>
   );
 }

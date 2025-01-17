@@ -18,8 +18,8 @@ export default function QualityInput({
   setParams,
 }: QualityInputProps) {
   return (
-    <>
-      <label className="text-lg" htmlFor="quality">
+    <section className="flex flex-col gap-2 w-full">
+      <label className="text-md" htmlFor="quality">
         Quality
       </label>
       <input
@@ -33,6 +33,6 @@ export default function QualityInput({
         }
       />
       <p>{params.quality}</p>
-    </>
+    </section>
   );
 }

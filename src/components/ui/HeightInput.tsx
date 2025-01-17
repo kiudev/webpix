@@ -22,8 +22,8 @@ export default function HeightInput({
   setParams,
 }: HeightInputProps) {
   return (
-    <>
-      <label htmlFor="height">Height</label>
+    <section className="flex flex-col gap-2 w-full">
+      <label className="text-md" htmlFor="height">Height</label>
       <input
         className="bg-color-300 text-color-100 outline-none text-md indent-2 p-1 rounded-md "
         type="number"
@@ -37,6 +37,6 @@ export default function HeightInput({
           })
         }
       />
-    </>
+    </section>
   );
 }
