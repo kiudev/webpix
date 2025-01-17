@@ -13,11 +13,10 @@ export default function Welcome() {
           <h2 className="text-md lg:text-2xl">
             Optimize your web applications better
           </h2>
-          <p>
+          <p className="text-balance">
             Converting your images to WEBP, you
             can enhance loading times and improve overall user experience on
-            your website. This modern format supports both lossy and lossless
-            compression, making it an excellent choice for web applications.
+            your website.
           </p>
         </section>
         <Dropzone />
