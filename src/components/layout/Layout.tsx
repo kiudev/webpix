@@ -4,8 +4,8 @@ import Footer from "@/components/footer/Footer";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen max-w-screen bg-color-300 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(13,19,21,0.2),rgba(255,255,255,0))] text-color-100 dark:bg-color-100 dark:text-color-300 dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(225,231,233,0.2),rgba(255,255,255,0))] transition-colors duration-500">
-      <section className="grid grid-flow-row min-h-screen lg:w-[1300px] lg:m-auto">
+    <div className="min-h-screen max-w-screen bg-neutral-100 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors duration-500">
+      <section className="grid grid-flow-row min-h-screen xl:w-[1300px] px-5 md:px-10 lg:m-auto">
         <Header />
         {children}
       <Footer />

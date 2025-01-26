@@ -9,19 +9,13 @@ export default function Header() {
   };
 
   return (
-    <header className="animate-fadeInUp pt-14">
-      <nav className="flex flex-row justify-between items-center">
-        <h1 className="font-nunito text-4xl uppercase tracking-widest font-bold text-color-200 dark:text-color-300">
-          Webpix
-        </h1>
-
+    <header className="pt-14">
+      <nav className="flex flex-row justify-end items-center">
         <button
           onClick={toggleTheme}
-          className="-mt-1 text-color-200 dark:text-color-300"
+          className="-mt-1 text-color-200 dark:text-color-300 cursor-pointer"
         >
-          {theme === "light"
-            ? iconFile.lightModeIcon
-            : iconFile.darkModeIcon}
+          {theme === "light" ? iconFile.lightModeIcon : iconFile.darkModeIcon}
         </button>
       </nav>
     </header>

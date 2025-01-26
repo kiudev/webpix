@@ -1,15 +1,19 @@
-.filepond--drop-label {
-  background-color: #35626e;
-  color: #e1e7e9;
-  z-index: 0;
-  padding: 20px;
-  border-radius: 5px;
+.filepond--wrapper {
+
+}
+
+.filepond--list {
+  background-color: #f28773;
+  border-radius: 7px;
+}
+
+label {
+  color: #161616;
 }
 
 .filepond--item-panel {
   border-radius: 0;
 }
-
 
 .filepond--file-action-button .filepond--action-retry-item-load {
   visibility: visible;

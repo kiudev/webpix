@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import type { LoaderFunction } from "react-router";
 import { useFileContext } from "@/context/FileContext";
 import { DrawImage } from "@/components/editor/DrawImage";
-import WidthInput from "@/components/ui/WidthInput";
-import HeightInput from "@/components/ui/HeightInput";
 import QualityInput from "@/components/ui/QualityInput";
 import OriginalImage from "@/components/ui/OriginalImage";
 import EditedImage from "@/components/ui/EditedImage";
 import DownloadButton from "@/components/ui/DownloadButton";
 import PercentageComponent from "@/components/ui/PercentageComponent";
 import { iconFile } from "@/assets/icons";
+import DimensionInput from "@/components/ui/DimensionInput";
+import { useNavigateWithTransition } from "@/hooks/useNavigateWithTransition";
 
 export const Loader: LoaderFunction = async () => {
   return {};
@@ -22,13 +22,18 @@ export default function Editor() {
   const [fileSizeInKB, setFileSizeInKB] = useState<number | null>(null);
   const [isMovingBoth, setIsMovingBoth] = useState(false);
   const [zoom, setZoom] = useState(1);
+  const [isVisible, setIsVisible] = useState(true);
   const originalCanvasRef = useRef<HTMLCanvasElement>(null);
   const editedCanvasRef = useRef<HTMLCanvasElement>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
+  const buttonSettingsRef = useRef<HTMLButtonElement>(null);
 
   const { files, params, setParams } = useFileContext();
   const { file } = files[0];
   const originalFileInMB = file.size / (1024 * 1024);
   const originalFileInKB = file.size / 1024;
+
+  const navigate = useNavigateWithTransition();
 
   const compressionPercentage =
     fileSizeInKB !== null
@@ -71,26 +76,74 @@ export default function Editor() {
     setZoom(zoom + e.deltaY * -0.001);
   };
 
-  return (
-    <article className="flex flex-col w-full gap-20 min-h-screen max-w-screen bg-color-300 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(13,19,21,0.2),rgba(255,255,255,0))] text-color-100 dark:bg-color-100 dark:text-color-300 dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(225,231,233,0.2),rgba(255,255,255,0))] transition-colors duration-500">
-      <section className="flex flex-col w-[20%] gap-5 fixed left-0 right-0 bottom-0 m-auto bg-color-200 rounded-t-2xl px-10 py-5 animate-fadeInUp">
-        <WidthInput
-          params={params}
-          aspectRatio={aspectRatio}
-          setParams={setParams}
-        />
-        <HeightInput
-          params={params}
-          aspectRatio={aspectRatio}
-          setParams={setParams}
-        />
+  const handleSettingsClick = () => {
+    if (isVisible) {
+      settingsRef.current?.classList.remove("animate-(--slide-right)");
+      settingsRef.current?.classList.add("animate-(--slide-left)");
+      buttonSettingsRef.current?.classList.add(
+        "animate-(--slide-out-left-button)"
+      );
 
-        <QualityInput params={params} setParams={setParams} />
-      </section>
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 500);
+    } else {
+      setIsVisible(true);
+    }
+  };
+
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, []);
+
+  return (
+    <main className="flex flex-col w-full gap-20 min-h-screen max-w-screen bg-neutral-100 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors duration-500">
+      <button className="absolute right-5 top-5 bg-primary-500 text-neutral-900 cursor-pointer p-3 rounded-full" onClick={() => navigate("/")}>{iconFile.closeButton}</button>
+      <button
+        ref={buttonSettingsRef}
+        onClick={handleSettingsClick}
+        className={`absolute bottom-[220px] left-0 bg-primary-500 text-neutral-900 z-1 cursor-pointer ${
+          isVisible ? "animate-(--slide-in-left-button)" : ""
+        }`}
+      >
+        {isVisible ? iconFile.chevronsLeft : iconFile.chevronsRight}
+      </button>
+      {isVisible && (
+        <section
+          ref={settingsRef}
+          className="flex flex-col w-96 gap-5 fixed left-0 right-0 bottom-0 dark:bg-neutral-900 backdrop-blur-xl p-10 animate-(--slide-right) shadow-xl border-neutral-100/20 border-t-2 border-r-2"
+        >
+          <DimensionInput
+            name="width"
+            value={params.width}
+            params={params}
+            setParams={setParams}
+            aspectRatio={aspectRatio}
+          />
+
+          <DimensionInput
+            name="height"
+            value={params.height}
+            params={params}
+            setParams={setParams}
+            aspectRatio={aspectRatio}
+          />
+
+          <QualityInput params={params} setParams={setParams} />
+        </section>
+      )}
       <div className="flex flex-row min-h-screen">
         <div>
           <button
-            className={`absolute inset-0 w-10 h-10 m-auto bg-color-200 rounded-lg px-2 ${isMovingBoth ? 'bg-color-300 text-color-200' : 'bg-color-200 text-color-300'}`}
+            className={`absolute cursor-pointer inset-0 w-10 h-10 m-auto  rounded-lg px-2 ${
+              isMovingBoth
+                ? "bg-primary-500 text-neutral-900"
+                : "bg-neutral-100/50 backdrop-blur-xl text-neutral-900"
+            }`}
             onClick={handleMoveBothImages}
           >
             {iconFile.moveBoth}
@@ -126,6 +179,6 @@ export default function Editor() {
           originalFileInKB={originalFileInKB}
         />
       </div>
-    </article>
+    </main>
   );
 }

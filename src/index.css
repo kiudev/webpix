@@ -1,19 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@keyframes slide-out-left {
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --font-nunito: "Nunito", "ui-sans-serif", "system-ui";
+  --font-inter: '"Inter"', "ui-sans-serif", "system-ui";
+
+  --color-primary-100: #fce7e3;
+  --color-primary-200: #facfc7;
+  --color-primary-300: #f7b7ab;
+  --color-primary-400: #f59f8f;
+  --color-primary-500: #f28773;
+  --color-primary-600: #c26c5c;
+  --color-primary-700: #915145;
+  --color-primary-800: #61362e;
+  --color-primary-900: #301b17;
+  --color-neutral-100: #e0e0e0;
+  --color-neutral-200: #faf9f6;
+  --color-neutral-800: #1e1e1e;
+  --color-neutral-900: #121212;
+
+  --fade-in-up: fade-in-up 0.8s ease-in-out;
+  --slide: slide 0.8s ease-in-out;
+  --bounce-in: bounce-in 1s infinite;
+  --slide-left: slide-left 0.5s ease-in-out;
+  --slide-right: slide-right 0.5s ease-in-out;
+  --slide-in-left-button: slide-in-left-button 0.5s ease-in-out forwards;
+  --slide-out-left-button: slide-out-left-button 0.5s ease-in-out;
+}
+
+@keyframes fade-in-up {
   from {
-    transform: translateX(0);
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(40px);
   }
   to {
-    transform: translateX(-100%);
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
-@keyframes slide-in-right {
+@keyframes bounce-in {
+  0%,
+  100% {
+    transform: translateX(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes slide-view-right {
   from {
     transform: translateX(100%);
   }
@@ -22,10 +65,64 @@
   }
 }
 
+@keyframes slide-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-in-left-button {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(24rem);
+  }
+}
+
+@keyframes slide-out-left-button {
+  from {
+    transform: translateX(24rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-view-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* View Transition API */
+.slide-editor::view-transition-old(root) {
+  animation: slide-view-left 0.5s ease-in-out;
+}
+
+.slide-editor::view-transition-new(root) {
+  animation: slide-right 0.5s ease-in-out;
+}
+
 ::view-transition-old(root) {
-  animation: 300ms ease-in-out slide-out-left;
+  animation: slide-left 0.5s ease-in-out;
 }
 
 ::view-transition-new(root) {
-  animation: 300ms ease-in-out slide-in-right;
+  animation: slide-view-right 0.5s ease-in-out;
 }

@@ -18,12 +18,13 @@ export default function QualityInput({
   setParams,
 }: QualityInputProps) {
   return (
-    <section className="flex flex-col gap-2 w-full">
-      <label className="text-md" htmlFor="quality">
+    <section className="flex flex-col justify-between gap-5">
+      <label className="text-md flex items-center justify-between !text-neutral-900 dark:!text-primary-500 font-semibold" htmlFor="quality">
         Quality
+        <p className="text-center text-md">{params.quality + "%"}</p>
       </label>
       <input
-        className="accent-color-400 rounded-md"
+        className="accent-primary-100 rounded-md w-full"
         type="range"
         value={params.quality}
         min={1}
@@ -32,7 +33,6 @@ export default function QualityInput({
           setParams({ ...params, quality: Number(e.target.value) })
         }
       />
-      <p>{params.quality}</p>
     </section>
   );
 }

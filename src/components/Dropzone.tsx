@@ -1,8 +1,13 @@
-import { FilePond } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 import { FilePondFile, FilePondInitialFile } from "filepond";
-import "filepond/dist/filepond.min.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "./dropzone-styles.css";
+import 'filepond/dist/filepond.min.css'
 import { useFileContext } from "@/context/FileContext";
+import { iconFile } from "@/assets/icons";
+
+registerPlugin(FilePondPluginImagePreview);
 
 export const Dropzone = () => {
   const { files, setFiles, handleSubmit, setParams } = useFileContext();
@@ -16,11 +21,15 @@ export const Dropzone = () => {
   }));
 
   return (
-    <form className="w-[50%] h-40" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col justify-center lg:w-[50%]"
+      onSubmit={handleSubmit}
+    >
       <FilePond
         files={convertedFiles}
         allowMultiple={false}
         dropOnPage={true}
+        allowImagePreview={true}
         dropOnElement={false}
         onupdatefiles={(fileItems: FilePondFile[]) => {
           setFiles(fileItems);
@@ -34,21 +43,23 @@ export const Dropzone = () => {
               img.onload = () => {
                 const width = img.width;
                 const height = img.height;
-                setParams({ width, height, quality: 75 })
-              }
+                setParams({ width, height, quality: 75 });
+              };
               img.src = URL.createObjectURL(file);
             }
-          })
+          });
         }}
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
         stylePanelLayout={"compact"}
       />
-      <button
-        type="submit"
-        className="bg-color-200 text-color-300 py-1 px-10 sticky float-right cursor-pointer mt-4 text-md rounded-[5px]"
-      >
-        Start
-      </button>
+      {files.length > 0 && (
+        <button
+          type="submit"
+          className="text-primary-500 m-auto sticky cursor-pointer mt-4 text-md rounded-[5px] animate-(--bounce-in)"
+        >
+          {iconFile.arrowRight}
+        </button>
+      )}
     </form>
   );
 };
