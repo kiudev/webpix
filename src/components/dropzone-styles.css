@@ -1,6 +1,6 @@
 .filepond--root {
   border-radius: 10px;
-  font-family: 'Geist', sans-serif;
+  cursor: pointer;
 }
 
 .filepond--drop-label {
