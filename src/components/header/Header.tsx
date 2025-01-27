@@ -13,7 +13,7 @@ export default function Header() {
       <nav className="flex flex-row justify-end items-center">
         <button
           onClick={toggleTheme}
-          className="-mt-1 text-color-200 dark:text-color-300 cursor-pointer"
+          className="-mt-1 text-primary-700 border-primary-700 dark:text-primary-500 cursor-pointer border-2 dark:border-primary-500 rounded-full p-2"
         >
           {theme === "light" ? iconFile.lightModeIcon : iconFile.darkModeIcon}
         </button>
