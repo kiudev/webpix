@@ -22,7 +22,7 @@ export const Dropzone = () => {
 
   return (
     <form
-      className="flex flex-col justify-center lg:w-[50%]"
+      className="flex flex-col justify-center w-[50%] mt-5"
       onSubmit={handleSubmit}
     >
       <FilePond
