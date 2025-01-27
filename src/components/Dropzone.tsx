@@ -6,11 +6,13 @@ import "./dropzone-styles.css";
 import 'filepond/dist/filepond.min.css'
 import { useFileContext } from "@/context/FileContext";
 import { iconFile } from "@/assets/icons";
+import { useLanguageContext } from "@/context/LanguageContext";
 
 registerPlugin(FilePondPluginImagePreview);
 
 export const Dropzone = () => {
   const { files, setFiles, handleSubmit, setParams } = useFileContext();
+  const { t, animate } = useLanguageContext();
 
   const convertedFiles: FilePondInitialFile[] = files.map((file) => ({
     source: file.file.name,
@@ -22,7 +24,7 @@ export const Dropzone = () => {
 
   return (
     <form
-      className="flex flex-col justify-center w-[50%] mt-5"
+      className={`flex flex-col justify-center w-[50%] mt-5 transition-all ${animate ? "animate-(--fade-in)" : ""}`}
       onSubmit={handleSubmit}
     >
       <FilePond
@@ -49,7 +51,7 @@ export const Dropzone = () => {
             }
           });
         }}
-        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+        labelIdle={`<span style="font-family: Geist, sans-serif; cursor: pointer;">${t('Drag & Drop your files or Browse')}</span>`}
         stylePanelLayout={"compact"}
       />
       {files.length > 0 && (
