@@ -1,27 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
+  /* FONTS */
   --font-nunito: "Nunito", "ui-sans-serif", "system-ui";
   --font-inter: '"Inter"', "ui-sans-serif", "system-ui";
+  --font-geist: "Geist", "ui-sans-serif", "system-ui";
 
-  --color-primary-100: #fce7e3;
-  --color-primary-200: #facfc7;
-  --color-primary-300: #f7b7ab;
-  --color-primary-400: #f59f8f;
-  --color-primary-500: #f28773;
-  --color-primary-600: #c26c5c;
-  --color-primary-700: #915145;
-  --color-primary-800: #61362e;
-  --color-primary-900: #301b17;
+  /* COLORS */
+  --color-primary-100: #e5eaec;
+  --color-primary-200: #cbd5d9;
+  --color-primary-300: #b2bfc5;
+  --color-primary-400: #98aab2;
+  --color-primary-500: #7e959f;
+  --color-primary-600: #65777f;
+  --color-primary-700: #4c595f;
+  --color-primary-800: #323c40;
+  --color-primary-900: #191e20;
   --color-neutral-100: #e0e0e0;
   --color-neutral-200: #faf9f6;
   --color-neutral-800: #1e1e1e;
   --color-neutral-900: #121212;
 
+  /* ANIMATIONS */
   --fade-in-up: fade-in-up 0.8s ease-in-out;
   --slide: slide 0.8s ease-in-out;
   --bounce-in: bounce-in 1s infinite;
@@ -29,6 +34,16 @@
   --slide-right: slide-right 0.5s ease-in-out;
   --slide-in-left-button: slide-in-left-button 0.5s ease-in-out forwards;
   --slide-out-left-button: slide-out-left-button 0.5s ease-in-out;
+}
+
+@layer utilities {
+  .color-mix {
+    background-color: color-mix(
+      in hue,
+      var(--color-primary-500) 40%,
+      var(--color-neutral-900) 60%
+    );
+  }
 }
 
 @keyframes fade-in-up {
