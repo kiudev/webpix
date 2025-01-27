@@ -1,3 +1,5 @@
+import { useLanguageContext } from "@/context/LanguageContext";
+
 interface QualityInputProps {
   params: {
     width: number;
@@ -17,10 +19,12 @@ export default function QualityInput({
   params,
   setParams,
 }: QualityInputProps) {
+  const { t } = useLanguageContext();
+
   return (
     <section className="flex flex-col justify-between gap-5">
       <label className="text-md flex items-center justify-between !text-neutral-900 dark:!text-primary-500 font-semibold" htmlFor="quality">
-        Quality
+        {t("quality")}
         <p className="text-center text-md">{params.quality + "%"}</p>
       </label>
       <input
