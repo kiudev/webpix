@@ -57,7 +57,7 @@ export const Dropzone = () => {
       {files.length > 0 && (
         <button
           type="submit"
-          className="text-primary-500 m-auto sticky cursor-pointer mt-4 text-md rounded-[5px] animate-(--bounce-in)"
+          className="text-primary-600 dark:text-primary-500 m-auto sticky cursor-pointer mt-4 text-md rounded-[5px] animate-(--bounce-in)"
         >
           {iconFile.arrowRight}
         </button>

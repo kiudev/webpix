@@ -15,7 +15,7 @@ interface DownloadButtonProps {
 export default function DownloadButton({ fileData, params, files }: DownloadButtonProps) {
   return (
     <button
-      className="pl-24 pr-8 py-4 fixed bottom-10 border-t-2 border-b-2 right-14 hover:scale-90 border-transparent transition-scale duration-500 cursor-pointer dark:bg-neutral-100/50 backdrop-blur-xl dark:text-neutral-900 rounded-full shadow-xl"
+      className="pl-24 pr-8 py-4 fixed bottom-10 border-2 right-14 hover:scale-90 transition-scale duration-500 cursor-pointer bg-neutral-100 border-neutral-900/20 text-neutral-900 dark:bg-neutral-900 dark:border-neutral-100/20 dark:text-neutral-100 rounded-full"
       onClick={() => handleDownload({ fileData, params, files })}
     >
       {iconFile.downloadIcon}

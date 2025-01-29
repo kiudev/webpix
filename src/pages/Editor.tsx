@@ -115,7 +115,7 @@ export default function Editor() {
       {isVisible && (
         <section
           ref={settingsRef}
-          className="flex flex-col w-96 gap-5 fixed left-0 right-0 bottom-0 dark:bg-neutral-900 backdrop-blur-xl p-10 animate-(--slide-right) shadow-xl border-neutral-100/20 border-t-2 border-r-2"
+          className="flex flex-col w-96 gap-5 fixed left-0 right-0 bottom-0 text-neutral-600 bg-neutral-100 dark:bg-neutral-900 p-10 animate-(--slide-right) border-neutral-900/20 dark:border-neutral-100/20 border-t-2 border-r-2"
         >
           <DimensionInput
             name="width"
@@ -139,10 +139,10 @@ export default function Editor() {
       <div className="flex flex-row min-h-screen">
         <div>
           <button
-            className={`absolute cursor-pointer inset-0 w-10 h-10 m-auto  rounded-lg px-2 ${
+            className={`absolute cursor-pointer inset-0 w-10 h-10 m-auto rounded-lg px-2 hover:rotate-12 hover:scale-125 transition-all ${
               isMovingBoth
-                ? "bg-primary-500 text-neutral-900"
-                : "bg-neutral-100/50 backdrop-blur-xl text-neutral-900"
+                ? "bg-neutral-100 text-neutral-900 dark:bg-neutral-900 dark:text-primary-500"
+                : "bg-primary-500 text-neutral-900"
             }`}
             onClick={handleMoveBothImages}
           >

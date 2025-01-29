@@ -31,11 +31,11 @@ export default function DimensionInput({
 
   return (
     <section className="flex flex-row items-center justify-between gap-2">
-      <label className="text-md capitalize !text-primary-500 font-semibold" htmlFor={name}>
+      <label className="text-md capitalize !text-primary-600 dark:!text-primary-500 font-semibold" htmlFor={name}>
         {t(name)}
       </label>
       <input
-        className=" text-neutral-100 border-2 border-neutral-100/20 outline-none text-md indent-2 p-1 rounded-md"
+        className="text-neutral-900 dark:text-neutral-100 border-2 border-neutral-900/20 dark:border-neutral-100/20 outline-none text-md indent-2 p-1 rounded-md"
         type="number"
         name={name}
         value={value}

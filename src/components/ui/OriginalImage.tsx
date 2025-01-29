@@ -18,7 +18,7 @@ export default function OriginalImage({
   originalCanvasRef,
   isMovingBoth,
   zoom,
-  handleMouseWheel
+  handleMouseWheel,
 }: OriginalImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
@@ -34,8 +34,6 @@ export default function OriginalImage({
     isDragging,
     setIsDragging,
   });
-
-
 
   useEffect(() => {
     if (originalFileInKB !== null || originalFileInMB !== null) {
@@ -53,8 +51,8 @@ export default function OriginalImage({
   ]);
 
   return (
-    <div className="w-[50%] border-r flex flex-col justify-center">
-      <div className="flex flex-row fixed top-0 px-5 py-2 dark:bg-neutral-900 dark:text-neutral-100 border-r-2 border-b-2 border-neutral-100/20 rounded-br-2xl">
+    <div className="w-[50%] border-r border-neutral-100 dark:border-neutral-900 flex flex-col justify-center">
+      <div className="flex flex-row fixed top-0 px-5 py-2 bg-neutral-100 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 border-r-2 border-b-2 border-neutral-900/20 dark:border-neutral-100/20 rounded-br-2xl backdrop-blur-2xl">
         {!isLoading ? (
           <>
             {originalFileInKB > 1024 ? (
@@ -76,7 +74,7 @@ export default function OriginalImage({
           objectPosition: isMovingBoth
             ? `${equalPosition.x}px ${equalPosition.y}px`
             : `${imagePosition.x}px ${imagePosition.y}px`,
-          zoom: zoom
+          zoom: zoom,
         }}
         onWheel={handleMouseWheel}
         onMouseDown={handleMouseDown}
