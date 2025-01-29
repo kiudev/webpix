@@ -3,6 +3,10 @@
   cursor: pointer;
 }
 
+#filepond--drop-label-27ulae0m8 {
+  cursor: pointer;
+}
+
 .filepond--drop-label {
   background-color: var(--color-primary-500);
   border-radius: 7px;
@@ -10,6 +14,7 @@
 
 label {
   color: var(--color-neutral-900);
+  cursor: pointer;
 }
 
 .filepond--file-action-button .filepond--action-retry-item-load {
