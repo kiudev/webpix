@@ -26,3 +26,9 @@ label {
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+@media (max-width: 768px) {
+  .filepond--drop-label span {
+    font-size: 14px !important;
+  }
+}

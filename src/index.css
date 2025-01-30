@@ -136,6 +136,26 @@
   }
 }
 
+@media (max-width: 768px) {
+  @keyframes slide-in-left-button {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(20rem);
+    }
+  }
+
+  @keyframes slide-out-left-button {
+    from {
+      transform: translateX(20rem);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
 /* View Transition API */
 .slide-editor::view-transition-old(root) {
   animation: slide-view-left 0.5s ease-in-out;

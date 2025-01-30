@@ -71,9 +71,9 @@ export default function EditedImage({
         {!isLoading ? (
           <>
             {fileSizeInKB !== null && fileSizeInKB > 1024 ? (
-              <p className="text-2xl text-center">{fileSizeInMB + " MB"}</p>
+              <p className="text-base lg:text-2xl text-center">{fileSizeInMB + " MB"}</p>
             ) : (
-              <p className="text-2xl text-center">{fileSizeInKB + " KB"}</p>
+              <p className="text-base lg:text-2xl text-center">{fileSizeInKB + " KB"}</p>
             )}
           </>
         ) : (

@@ -56,11 +56,11 @@ export default function OriginalImage({
         {!isLoading ? (
           <>
             {originalFileInKB > 1024 ? (
-              <p className="text-2xl text-center">
+              <p className="text-base lg:text-2xl text-center">
                 {originalFileInMB.toFixed(2) + " MB"}
               </p>
             ) : (
-              <p className="text-2xl text-center">
+              <p className="text-base lg:text-2xl text-center">
                 {originalFileInKB.toFixed(2) + " KB"}
               </p>
             )}

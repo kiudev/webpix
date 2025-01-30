@@ -22,7 +22,7 @@ export default function Footer() {
           </li>
         </ul>
         <hr className="bg-neutral-900 dark:bg-neutral-100 w-0.5 h-5" />
-        <p className="flex flex-row gap-1">
+        <p className="flex flex-row gap-1 text-sm lg:text-base">
           &copy; {new Date().getFullYear()} Daniel Saavedra
         </p>
       </div>
