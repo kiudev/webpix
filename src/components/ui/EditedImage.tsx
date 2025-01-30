@@ -42,7 +42,7 @@ export default function EditedImage({
 
   const { equalPosition, setEqualPosition } = useFileContext();
 
-  const { handleMouseDown } = useMoveImage({
+  const { handleMouseDown, handleTouchStart } = useMoveImage({
     startPositionRef,
     imagePosition,
     setImagePosition,
@@ -89,6 +89,7 @@ export default function EditedImage({
         }}
         onMouseDown={handleMouseDown}
         onWheel={handleMouseWheel}
+        onTouchStart={handleTouchStart}
         ref={editedCanvasRef}
         className={`w-full min-h-screen object-cover ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
