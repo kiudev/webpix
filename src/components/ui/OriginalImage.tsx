@@ -27,7 +27,7 @@ export default function OriginalImage({
 
   const { equalPosition, setEqualPosition } = useFileContext();
 
-  const { handleMouseDown } = useMoveImage({
+  const { handleMouseDown, handleTouchStart } = useMoveImage({
     startPositionRef,
     imagePosition,
     setImagePosition,
@@ -78,6 +78,7 @@ export default function OriginalImage({
         }}
         onWheel={handleMouseWheel}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         ref={originalCanvasRef}
         className={`w-full min-h-screen object-cover ${
           isDragging ? "cursor-grabbing" : "cursor-grab"

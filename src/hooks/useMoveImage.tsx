@@ -27,6 +27,17 @@ export default function useMoveImage({
     [imagePosition, setIsDragging, startPositionRef]
   );
 
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent<HTMLCanvasElement>) => {
+      setIsDragging(true);
+      startPositionRef.current = {
+        x: e.touches[0].clientX - imagePosition.x,
+        y: e.touches[0].clientY - imagePosition.y,
+      };
+    },
+    [imagePosition, setIsDragging, startPositionRef]
+  );
+
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!isDragging) return;
@@ -72,5 +83,5 @@ export default function useMoveImage({
     };
   }, [handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
-  return { handleMouseDown };
+  return { handleMouseDown, handleTouchStart };
 }
