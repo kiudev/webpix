@@ -30,7 +30,7 @@ export default function DimensionInput({
   const { t } = useLanguageContext();
 
   return (
-    <section className="flex flex-row items-center justify-between gap-2">
+    <div className="flex flex-row items-center justify-between gap-2">
       <label className="text-md capitalize !text-primary-600 dark:!text-primary-500 font-semibold" htmlFor={name}>
         {t(name)}
       </label>
@@ -47,6 +47,6 @@ export default function DimensionInput({
           })
         }
       />
-    </section>
+    </div>
   );
 }

@@ -115,7 +115,7 @@ export default function Editor() {
       {isVisible && (
         <section
           ref={settingsRef}
-          className="flex flex-col w-80 lg:w-96 gap-5 fixed left-0 right-0 bottom-0 text-neutral-600 bg-neutral-100 dark:bg-neutral-900 p-10 animate-(--slide-right) border-neutral-900/20 dark:border-neutral-100/20 border-t-2 border-r-2"
+          className="flex flex-col w-80 md:w-96 gap-5 fixed left-0 right-0 bottom-0 text-neutral-600 bg-neutral-100 dark:bg-neutral-900 p-10 animate-(--slide-right) border-neutral-900/20 dark:border-neutral-100/20 border-t-2 border-r-2 z-1"
         >
           <DimensionInput
             name="width"
@@ -172,7 +172,7 @@ export default function Editor() {
         )}
       </div>
       <DownloadButton fileData={fileData} params={params} files={files} />
-      <div className="fixed bottom-10 right-36 flex flex-row">
+      <div className="fixed bottom-28 lg:bottom-10 right-0 lg:right-36 flex flex-row">
         <PercentageComponent
           compressionPercentage={compressionPercentage}
           fileSizeInKB={fileSizeInKB}
